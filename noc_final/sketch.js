@@ -98,29 +98,31 @@ function designThree() {
   var recordedWords = split(recordedPara, " ");
   for (var i = 0; i < recordedWords.length; i++) {
     var w = recordedWords[i];
-    var wordPresent = 0;
-    var wordCount = 0;
-    
-    for(var k = 0; k < recordedWords.length; k++) {
-      if(recordedWords[k] == w) {
-        wordCount++;
+    if (w.length >= 4) {
+      var wordPresent = 0;
+      var wordCount = 0;
+
+      for (var k = 0; k < recordedWords.length; k++) {
+        if (recordedWords[k] == w) {
+          wordCount++;
+        }
       }
-    }
-    
-    for (var j = 0; j < flock.boids.length; j++) {
-      if (flock.boids[j].word == w) {
-        wordPresent = 1;
-      }
-    }
-    if (wordPresent == 0) {
-      var b = new Boid(2*(width / 3), height / 2, w.length * 2, w.count);
-      flock.addBoid(b);
-      flock.boids[j].word = w;
-      break;
-    } else if (wordPresent == 1) {
+
       for (var j = 0; j < flock.boids.length; j++) {
         if (flock.boids[j].word == w) {
-          flock.boids[j].count = wordCount;
+          wordPresent = 1;
+        }
+      }
+      if (wordPresent == 0) {
+        var b = new Boid(2 * (width / 3), height / 2, w.length * 2, w.count);
+        flock.addBoid(b);
+        flock.boids[j].word = w;
+        break;
+      } else if (wordPresent == 1) {
+        for (var j = 0; j < flock.boids.length; j++) {
+          if (flock.boids[j].word == w) {
+            flock.boids[j].count = wordCount;
+          }
         }
       }
     }
